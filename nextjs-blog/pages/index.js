@@ -11,8 +11,8 @@ export default function Home() {
     return (
         <div className=" flex flex-col relative scrollbar-hide overflow-hidden">
             <Head>
-                <title>Uniswap</title>
-                <link rel="icon" href="/uniswap.webp" />
+                <title>CollectTix</title>
+                <link rel="icon" href="/ct.png" />
             </Head>
 
             <main>

@@ -33,12 +33,17 @@ const Header = () => {
     return (
         <div className="header p-4 w-full flex items-center justify-between fixed top-0 bg-[#111524]">
             <div className="flex items-center">
-                <Image
-                    src={"/uniswap.webp"}
-                    width={40}
-                    height={40}
-                    className="mr-12"
-                />
+                <div className="flex flex-col items-center justify-center mr-24">
+                    <div className=" flex items-center">
+                        <Image
+                            src={"/ct.png"}
+                            width={50}
+                            height={50}
+                            className=""
+                        />
+                    </div>
+                    <p className="font-medium text-white">CollectTix</p>
+                </div>
 
                 {/* links Div  */}
 
@@ -46,7 +51,7 @@ const Header = () => {
                     <li className="li">
                         <Link href={"/"}>Swap</Link>
                     </li>
-                    <li className="li">Tokens</li>
+                    {/* <li className="li">Tokens</li> */}
                     <li className="li">
                         <Link href={"/NFT"}>NFTs</Link>
                     </li>

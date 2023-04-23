@@ -1,17 +1,22 @@
 require("@nomicfoundation/hardhat-toolbox")
-require("dotenv").config({ path: ".env" })
-
+require("dotenv").config()
+// require("hardhat-")
 /** @type import('hardhat/config').HardhatUserConfig */
 const RPC_URL = process.env.RPC_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY
+const SEP_URL = process.env.SEP_URL
 module.exports = {
-    solidity: "0.8.18",
+    solidity: "0.8.17",
     networks: {
         sepolia: {
-            url: "https://eth-sepolia.g.alchemy.com/v2/iPBtgwvjNv19zREWHoSTW9yYA6lJoFnR",
-            accounts: [
-                "b134013496f8b3fa6b53e8e6ab37a2bce7de43160889b3bfb43461fe3a284046",
-            ],
+            url: SEP_URL,
+            accounts: [PRIVATE_KEY],
+        },
+        goerli: {
+            url: RPC_URL,
+            accounts: [PRIVATE_KEY],
+            gas: 2100000,
+            gasPrice: 8000000000,
         },
     },
 }
