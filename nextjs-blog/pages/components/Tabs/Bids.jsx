@@ -7,21 +7,26 @@ import { truncate } from "truncate-ethereum-address"
 const Bids = ({ bids }) => {
     const [bidders, setBidders] = useState([])
     const getBids = () => {
-        const bidProposer = bids[0]
-        const bidAmount = bids[1]
+        let bidProposer, bidAmount
+        if (bids != undefined && bids.length != 0) {
+            bidProposer = bids[0]
+            bidAmount = bids[1]
+        }
         const arr = []
         let proposer
         let amt
         let obj
-        for (let i = 0; i < bidProposer.length; i++) {
-            proposer = bidProposer[i]
-            for (let j = 0; j < bidAmount.length; j++) {
-                amt = bidAmount[i]
-                console.log(formatEther(amt))
+        if (bids != undefined) {
+            for (let i = 0; i < bidProposer.length; i++) {
+                proposer = bidProposer[i]
+                for (let j = 0; j < bidAmount.length; j++) {
+                    amt = bidAmount[i]
+                    console.log(formatEther(amt))
+                }
+                obj = { bidder: proposer, amt: formatEther(amt) }
+                arr.push(obj)
+                amt = 0
             }
-            obj = { bidder: proposer, amt: formatEther(amt) }
-            arr.push(obj)
-            amt = 0
         }
         console.log(arr)
         setBidders(arr.sort((a, b) => b.amt - a.amt))
@@ -33,7 +38,7 @@ const Bids = ({ bids }) => {
     return (
         <div className="mt-10 scrollbar-hide w-[80%] mb-40">
             <div className="w-full p-5 h-fit border-[#1c2231] border rounded-lg flex flex-col mt-5 ">
-                {bids.length == 0 ? (
+                {bids != undefined ? (
                     <div>
                         <BoltIcon className="h-10" />
                         <h1 className="text-xl">
