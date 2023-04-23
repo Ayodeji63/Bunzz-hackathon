@@ -35,11 +35,8 @@ export const Bid = () => {
     const [page, setPage] = useState("Overview")
     const [bid, setBid] = useState("")
     const { address, provider } = useContext(HookContext)
-    const [startState, setStartState] = useState(false)
-    const [endState, setEndState] = useState(false)
     const [loading, setLoading] = useState(false)
     const color = "#fff"
-    const [highest, setHighest] = useState(clickedNft)
     const [timeLeft, setTimeLeft] = useState("")
     const [auctionBids, setAuctionBids] = useState([])
     const [latestBidder, setLatestBidder] = useState({})
@@ -58,53 +55,63 @@ export const Bid = () => {
     }
 
     const latestBid = async () => {
-        const obj = await getLatestProposer(provider, clickedNft.auctionId)
-        setLatestBidder(obj)
-        const bid = await getAuctionBids(provider, clickedNft.auctionId)
-        console.log(bid)
-        setAuctionBids(bid)
+        if (provider) {
+            const obj = await getLatestProposer(provider, clickedNft.auctionId)
+            setLatestBidder(obj)
+            const bid = await getAuctionBids(provider, clickedNft.auctionId)
+            console.log(bid)
+            setAuctionBids(bid)
+        }
     }
     useEffect(() => {
-        setAuctionBids(clickedNft.nft_bids)
-        latestBid()
+        if (provider) {
+            setAuctionBids(clickedNft?.nft_bids)
+            latestBid()
+        }
     }, [])
 
     const getTime = () => {
-        const startTime = new Date(Number(`${clickedNft.nft_startTime}`) * 1000)
-        const endTime = Number(`${clickedNft.nft_endTime}`)
-
-        const now = new Date().getTime()
-        if (startTime > now) {
-            setTimeLeft("Auction Hasn't Started")
-        } else {
-            const unixTimestamp = clickedNft.nft_endTime
-            const date = new Date(`${unixTimestamp}` * 1000).getTime()
-
-            const distance = date - now
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24))
-            const hours = Math.floor(
-                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        if (clickedNft && clickedNft.nft_Image[0]) {
+            const startTime = new Date(
+                Number(`${clickedNft?.nft_startTime}`) * 1000
             )
-            const minutes = Math.floor(
-                (distance % (1000 * 60 * 60)) / (1000 * 60)
-            )
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000)
-            if (distance < 0) {
-                setTimeLeft("00 : 00 : 00 : 00")
+            const endTime = Number(`${clickedNft?.nft_endTime}`)
+
+            const now = new Date().getTime()
+            if (startTime > now) {
+                setTimeLeft("Auction Hasn't Started")
             } else {
-                setTimeLeft(
-                    `${days < 10 ? "0" + days : days} : ${
-                        hours < 10 ? "0" + hours : hours
-                    } : ${minutes < 10 ? "0" + minutes : minutes} : ${
-                        seconds < 10 ? "0" + seconds : seconds
-                    }`
+                const unixTimestamp = clickedNft?.nft_endTime
+                const date = new Date(`${unixTimestamp}` * 1000).getTime()
+
+                const distance = date - now
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24))
+                const hours = Math.floor(
+                    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
                 )
+                const minutes = Math.floor(
+                    (distance % (1000 * 60 * 60)) / (1000 * 60)
+                )
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+                if (distance < 0) {
+                    setTimeLeft("00 : 00 : 00 : 00")
+                } else {
+                    setTimeLeft(
+                        `${days < 10 ? "0" + days : days} : ${
+                            hours < 10 ? "0" + hours : hours
+                        } : ${minutes < 10 ? "0" + minutes : minutes} : ${
+                            seconds < 10 ? "0" + seconds : seconds
+                        }`
+                    )
+                }
             }
         }
     }
     setInterval(() => {
-        getTime()
+        if (provider) {
+            getTime()
+        }
     }, 1000)
     const claimNft = async () => {
         try {
@@ -132,7 +139,7 @@ export const Bid = () => {
         <section className="min-h-screen min-w-screen mb-40 flex">
             <Header />
             {/* first-div  */}
-            {clickedNft && (
+            {provider && (
                 <div className="w-[50%] px-5 ml-40 overflow-hidden h-full flex flex-col items-center mt-40">
                     <div className="h-[70vh]   w-1/2 rounded-lg flex  flex-col justify-center items-center">
                         <div className="h-full w-full flex items-center rounded-lg">
@@ -182,16 +189,14 @@ export const Bid = () => {
                         <Overview
                             highestBidder={latestBidder?.proposer || ""}
                             highestBid={latestBidder?.bid || ""}
-                            owner={highest.nft_Owner}
-                            nftContractAdress={clickedNft.nft_address}
                         />
                     )}
                     {page == "Bids" && <Bids bids={auctionBids} />}
                     {page == "History" && <History />}
                 </div>
             )}
-            {/* second-div  */}
-            {clickedNft && (
+            {/* second-/.div  */}
+            {provider && (
                 <div className=" w-[35%] px-5 h-full mr-5  flex flex-col top-[15%] right-0 fixed ">
                     <div className="">
                         <div className="flex items-center mb-2 ">

@@ -38,7 +38,7 @@ const Bids = ({ bids }) => {
     return (
         <div className="mt-10 scrollbar-hide w-[80%] mb-40">
             <div className="w-full p-5 h-fit border-[#1c2231] border rounded-lg flex flex-col mt-5 ">
-                {bids != undefined ? (
+                {bids == undefined ? (
                     <div>
                         <BoltIcon className="h-10" />
                         <h1 className="text-xl">
