@@ -1,0 +1,196 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+.eth {
+  background: rgb(9, 7, 31);
+  background: radial-gradient(
+    circle,
+    rgba(9, 7, 31, 1) 0%,
+    rgba(0, 0, 30, 1) 47%,
+    rgba(7, 9, 9, 1) 100%
+  );
+}
+body {
+  @apply h-screen w-screen text-gray-500 bg-[#111524] overflow-x-hidden;
+  /* background: radial-gradient(
+    circle,
+    rgba(9, 7, 31, 1) 0%,
+    rgba(0, 0, 30, 1) 47%,
+    rgba(7, 9, 9, 1) 100%
+  ); */
+}
+
+.nav {
+  @apply h-full cursor-pointer hover:text-white text-gray-500 transition-all ease-linear duration-300  rounded-2xl flex items-center p-3 font-medium
+}
+
+.icon2 {
+  @apply flex hover:bg-gray-600  hover:text-white rounded-lg cursor-pointer px-2 py-1
+}
+.active {
+  @apply bg-blue-600 text-white
+}
+
+.li {
+  @apply mr-7 hover:text-white cursor-pointer text-lg active:text-white;
+}
+
+.current {
+  @apply text-white;
+}
+.icon {
+  @apply h-6 w-6 text-gray-400;
+}
+.connectBtn {
+  @apply bg-[#0f3b6d] w-full flex justify-center items-center rounded-2xl text-[#0d80fd] text-xl font-medium cursor-pointer h-14 hover:bg-[#1d4c81];
+}
+
+.swapBtn {
+  @apply bg-[#0d81fc] w-full flex justify-center items-center rounded-2xl text-[#4492e4] text-xl font-medium cursor-pointer h-14 hover:bg-[#1d4c81] text-white;
+}
+
+.headerConnect {
+  @apply text-lg font-normal text-[#0d7ffb] hover:text-[#174c93] cursor-pointer pr-2 border-r border-[#0d7ffb];
+}
+
+.headerConnectDiv {
+  @apply flex items-center bg-[#10315b] p-2 rounded-full;
+}
+
+.headerConnectDiv2 {
+  @apply flex bg-slate-900 p-2 rounded-full;
+}
+
+.section {
+ @apply w-full h-full mt-40 items-center flex justify-center mr-auto 
+
+}
+
+.wrapper {
+  @apply h-fit bg-[#0b111c] rounded-2xl border border-[#1c2231] shadow-xl p-5 relative;
+}
+.position {
+  @apply flex bg-blue-500 overflow-hidden items-center px-2 py-1 h-fit text-white rounded-xl cursor-pointer hover:bg-blue-600;
+}
+
+.preview {
+  @apply flex w-full justify-center items-center text-center rounded-lg border-2 h-[23rem] border-[#333a4b] cursor-pointer hover:border-[3px] hover:border-[#3c4351] hover:shadow-lg hover:shadow-slate-900
+}
+
+.label {
+  color: #fff !important;
+}
+.before::before {
+  content: "";
+  position: fixed;
+  z-index: -10;
+  width: 100%;
+  height: 100vh;
+  
+  background-color: #101011;
+  filter: opacity(65%);
+}
+.nfts-container {
+  padding: 50px;
+  margin-top: 40px;
+}
+.nft-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+.nft-card {
+  background: transparent;
+  width: 300px;
+  height: 454px;
+  padding: 10px;
+  border: 1.2px solid #2a2e31;
+  border-radius: 20px;
+  position: relative;
+}
+.nft-card > img {
+  height: 270px;
+  width: 300px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+.owner {
+  color: #a3a4a6;
+  font-size: 16px;
+}
+.nft-name {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+.price-container {
+  display: flex;
+  gap: 90px;
+  padding: 10px;
+  margin-top: 15px;
+  background: #212538;
+  border-radius: 15px;
+}
+.price,
+.bid span {
+  color: #a3a4a6;
+}
+.price,
+.bid h5 {
+  color: #fff;
+}
+.nft-card:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+  transition: ease 0.5s;
+}
+.nft-text {
+  color: #a3a4a6;
+  font-size: 30px;
+  font-weight: 500;
+  padding: 50px;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+}
+.nft-card:hover .overlay {
+  opacity: 1;
+}
+.action-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70%;
+}
+.action-buy{
+  background: #FFF;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 9999;
+}
+.create-nft-button{
+  background: #FFF;
+  height: 35px;
+  width: 120px;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 5px;
+}
+.nft-text-button{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header{
+  z-index: 999;
+}
