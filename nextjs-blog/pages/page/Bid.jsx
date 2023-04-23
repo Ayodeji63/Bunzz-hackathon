@@ -274,10 +274,10 @@ export const Bid = () => {
                         ))}
 
                     {timeLeft == "Auction Hasn't Started" && (
-                        <Button text={"Bid Not Open"} />
+                        <Button text={"Auction Not Open"} />
                     )}
                     {timeLeft == "00 : 00 : 00 : 00" && (
-                        <Button text={"Bid Closed"} />
+                        <Button text={"Auction Closed"} />
                     )}
                     {timeLeft == "00 : 00 : 00 : 00" &&
                         latestBidder?.proposer == address &&

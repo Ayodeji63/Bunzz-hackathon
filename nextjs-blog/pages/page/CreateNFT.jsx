@@ -71,7 +71,7 @@ const CreateNFT = () => {
     const handleClick = async () => {
         try {
             setLoading(true)
-            setLoadingText("Creating Nft...")
+            setLoadingText("Minting Nft...")
             const create = await bunzzNft(provider, nftImage, address)
 
             const _minBid = parseEther(bid)
@@ -83,7 +83,7 @@ const CreateNFT = () => {
             )
             console.log(auctionStartDate)
             console.log(auctionEndDate)
-            setLoadingText("Creating Auction..")
+            setLoadingText("Setting Auction..")
             const auctionInfo = await bunzzAuction(
                 provider,
                 create,

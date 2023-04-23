@@ -110,18 +110,18 @@ const Nft = () => {
                                 onClick={() => handleClick(nft)}
                             >
                                 <Image
-                                    src={nft.nft_Image[0]}
+                                    src={nft?.nft_Image[0]}
                                     alt="nft-main-image"
                                     width={100}
                                     height={100}
                                 />
                                 <span className="owner">{}</span>
-                                <h5 className="nft-name">{nft.nft_Name}</h5>
+                                <h5 className="nft-name">{nft?.nft_Name}</h5>
                                 <div className="price-container">
                                     <div className="price">
                                         <span>Price</span>
                                         <h5>
-                                            {utils.formatEther(nft.nft_price)}{" "}
+                                            {utils.formatEther(nft?.nft_price)}{" "}
                                             ETH
                                         </h5>
                                     </div>
@@ -129,7 +129,7 @@ const Nft = () => {
                                         <span>Sell Price</span>
                                         <h5>
                                             {utils.formatEther(
-                                                nft.nft_sellOutPrice
+                                                nft?.nft_sellOutPrice
                                             )}{" "}
                                             ETH
                                         </h5>
