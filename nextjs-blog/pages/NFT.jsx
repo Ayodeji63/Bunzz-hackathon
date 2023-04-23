@@ -52,9 +52,11 @@ const Nft = () => {
     }
 
     const fetch = async () => {
+        setloading(true)
         const data = await fetchAllAuction(provider)
         console.log(data)
         setNftInfo(data)
+        setloading(false)
     }
 
     if (nftInfo != undefined) {
@@ -62,7 +64,6 @@ const Nft = () => {
     }
 
     useEffect(() => {
-        console.log("Getting Auctions")
         fetch()
         tokenOwner()
     }, [provider])
@@ -101,73 +102,73 @@ const Nft = () => {
                         Create NFT
                     </a> */}
                 </div>
-                {nftInfo != undefined ? (
+                {provider ? (
                     <div className="nft-cards">
-                        {nftInfo?.map((nft) => (
-                            <div
-                                key={ethers.utils.formatEther(nft.auctionId)}
-                                className="nft-card"
-                                onClick={() => handleClick(nft)}
-                            >
-                                <Image
-                                    src={nft?.nft_Image[0]}
-                                    alt="nft-main-image"
-                                    width={100}
-                                    height={100}
+                        {!loading ? (
+                            nftInfo?.map((nft) => (
+                                <div
+                                    key={ethers.utils.formatEther(
+                                        nft.auctionId
+                                    )}
+                                    className="nft-card"
+                                    onClick={() => handleClick(nft)}
+                                >
+                                    <Image
+                                        src={nft?.nft_Image[0]}
+                                        alt="nft-main-image"
+                                        width={100}
+                                        height={100}
+                                    />
+                                    <span className="owner">{}</span>
+                                    <h5 className="nft-name">
+                                        {nft?.nft_Name}
+                                    </h5>
+                                    <div className="price-container">
+                                        <div className="price">
+                                            <span>Price</span>
+                                            <h5>
+                                                {utils.formatEther(
+                                                    nft?.nft_price
+                                                )}{" "}
+                                                ETH
+                                            </h5>
+                                        </div>
+                                        <div className="bid">
+                                            <span>Sell Price</span>
+                                            <h5>
+                                                {utils.formatEther(
+                                                    nft?.nft_sellOutPrice
+                                                )}{" "}
+                                                ETH
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div className="overlay">
+                                        <div className="action-container">
+                                            <button className="action-buy">
+                                                Buy Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="flex flex-col justify-center items-center">
+                                <ClipLoader
+                                    color={color}
+                                    loading={loading}
+                                    size={30}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
                                 />
-                                <span className="owner">{}</span>
-                                <h5 className="nft-name">{nft?.nft_Name}</h5>
-                                <div className="price-container">
-                                    <div className="price">
-                                        <span>Price</span>
-                                        <h5>
-                                            {utils.formatEther(nft?.nft_price)}{" "}
-                                            ETH
-                                        </h5>
-                                    </div>
-                                    <div className="bid">
-                                        <span>Sell Price</span>
-                                        <h5>
-                                            {utils.formatEther(
-                                                nft?.nft_sellOutPrice
-                                            )}{" "}
-                                            ETH
-                                        </h5>
-                                    </div>
-                                </div>
-                                <div className="overlay">
-                                    <div className="action-container">
-                                        <button className="action-buy">
-                                            Buy Now
-                                        </button>
-                                    </div>
-                                </div>
+                                <h1>Getting NFTs..</h1>
                             </div>
-                        ))}
+                        )}
                     </div>
                 ) : (
-                    // <div className="nft-cards flex flex-col">
-                    //     <h1>Connect Your Wallet</h1>
-                    //     <div className="w-[20%]">
-                    //         <Button
-                    //             text={
-                    //                 !loading ? (
-                    //                     "Connect Wallet"
-                    //                 ) : (
-                    //                     <ClipLoader
-                    //                         color={color}
-                    //                         loading={loading}
-                    //                         size={30}
-                    //                         aria-label="Loading Spinner"
-                    //                         data-testid="loader"
-                    //                     />
-                    //                 )
-                    //             }
-                    //             click={() => connect()}
-                    //         />
-                    //     </div>
-                    // </div>
-                    ""
+                    <div className="nft-cards flex flex-col">
+                        <h1>Connect Your Wallet</h1>
+                    </div>
                 )}
             </div>
         </div>
