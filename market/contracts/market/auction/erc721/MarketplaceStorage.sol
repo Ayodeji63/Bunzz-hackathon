@@ -48,6 +48,10 @@ contract MarketplaceStorage is IMarketplaceStorage {
         delete bids[id].bidAmount[index];
     }
 
+    function _deleteAuction(uint id) internal {
+        delete auctions[id];
+    }
+
     function _getLatestBidAmountAndProposer(
         uint256 id
     ) internal view returns (address, uint256) {

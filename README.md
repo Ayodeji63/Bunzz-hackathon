@@ -1,2 +1,2 @@
 # web3-projects
-# Bunzz-hackathon
+# CollectTix

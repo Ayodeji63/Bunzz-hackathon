@@ -22,6 +22,7 @@ import { ClipLoader } from "react-spinners"
 import { formatEther, formatUnits } from "ethers/lib/utils.js"
 import {
     _getAuctionBids,
+    _retrieveTokenNotSold,
     addBid,
     claimBids,
     claimToken,
@@ -34,7 +35,7 @@ export const Bid = () => {
     const [clickedNft, setClickedNFT] = useContext(nftDataContext)
     const [page, setPage] = useState("Overview")
     const [bid, setBid] = useState("")
-    const { address, provider } = useContext(HookContext)
+    const { address, provider, thisOwner } = useContext(HookContext)
     const [loading, setLoading] = useState(false)
     const color = "#fff"
     const [timeLeft, setTimeLeft] = useState("")
@@ -128,6 +129,17 @@ export const Bid = () => {
         try {
             setLoading(true)
             await claimBids(provider, clickedNft.auctionId)
+            setLoading(false)
+        } catch (e) {
+            alert(e.message)
+            setLoading(false)
+        }
+    }
+
+    const retrieveToken = async () => {
+        try {
+            setLoading(true)
+            await _retrieveTokenNotSold(provider, clickedNft.auctionId)
             setLoading(false)
         } catch (e) {
             alert(e.message)
@@ -314,6 +326,27 @@ export const Bid = () => {
                                 <Button
                                     text={"Claim Bids"}
                                     click={_claimBids}
+                                />
+                            ) : (
+                                <Button
+                                    text={
+                                        <ClipLoader
+                                            color={color}
+                                            loading={loading}
+                                            size={30}
+                                            aria-label="Loading Spinner"
+                                            data-testid="loader"
+                                        />
+                                    }
+                                />
+                            ))}
+
+                        {timeLeft == "00 : 00 : 00 : 00" &&
+                            thisOwner == address &&
+                            (!loading ? (
+                                <Button
+                                    text={"Retrieve Token"}
+                                    click={retrieveToken}
                                 />
                             ) : (
                                 <Button

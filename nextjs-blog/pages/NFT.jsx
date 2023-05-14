@@ -12,8 +12,6 @@ import Button from "./components/Button"
 import { ClipLoader } from "react-spinners"
 import { _owner, fetchAllAuction } from "../utils/Bunzz/createAuction"
 const Nft = () => {
-    const [thisOwner, setThisOwner] = useState("")
-
     const tokenOwner = async () => {
         try {
             const tx = await _owner(provider)
@@ -27,7 +25,8 @@ const Nft = () => {
     const href = CreateNFT
     const router = useRouter()
     const [nftInfo, setNftInfo] = useState([])
-    const { provider, connectWallet, address } = useContext(HookContext)
+    const { provider, connectWallet, address, thisOwner, setThisOwner } =
+        useContext(HookContext)
     let [clickedNFT, setClickedNFT] = useContext(nftDataContext)
     const [loading, setloading] = useState(false)
     const handleClick = (nft) => {

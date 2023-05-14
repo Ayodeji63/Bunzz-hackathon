@@ -38,6 +38,8 @@ export const HookProvider = ({ children }) => {
     const [showModal, setShowModal] = useState(false)
     const [bidParam, setBidParam] = useState({})
     const [clickedNFT, setClickedNFT] = useState({})
+    const [thisOwner, setThisOwner] = useState("")
+
     const getProviderOrSigner = async (needSigner = false) => {
         const provider = await web3ModalRef.current.connect()
         const web3Provider = new providers.Web3Provider(provider)
@@ -132,6 +134,8 @@ export const HookProvider = ({ children }) => {
                 bidParam,
                 setBidParam,
                 setClickedNFT,
+                thisOwner,
+                setThisOwner,
             }}
         >
             {children}{" "}

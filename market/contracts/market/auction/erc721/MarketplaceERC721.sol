@@ -8,7 +8,8 @@ import "./MarketplaceStorage.sol";
 import "./MarketplaceERC721Receiver.sol";
 import "./ERC721Interactions.sol";
 import "../../IBunzz.sol";
-
+import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AutomationCompatibleInterface.sol";
 import "hardhat/console.sol";
 
 // 507115.069
@@ -19,7 +20,8 @@ contract MarketplaceERC721 is
     ERC721Interactions,
     Ownable,
     IMarketplaceERC721,
-    IBunzz
+    IBunzz,
+    AutomationCompatibleInterface
 {
     using SafeMath for uint256;
     uint public numOfAuctions;
@@ -44,11 +46,6 @@ contract MarketplaceERC721 is
         uint256 auctionStartDate,
         uint256 auctionEndDate
     ) external override {
-        // Change this
-        // require(
-        //     _sentFrom(tokenId) == msg.sender,
-        //     "Marketplace: auction not created by the original token sender"
-        // );
         require(
             IERC721(tokenAddress).ownerOf(tokenId) == msg.sender,
             "Marketplace: caller is not the owner of the token"
@@ -171,7 +168,7 @@ contract MarketplaceERC721 is
         Auction memory auction = _getAuction(tokenId);
         require(msg.sender == auction.seller);
         require(
-            auction.auctionEndBlock < block.number,
+            auction.auctionEndBlock < block.timestamp,
             "Marketplace: the auction is not yet closed"
         );
         Bid memory bid = _getBid(tokenId);
@@ -181,6 +178,7 @@ contract MarketplaceERC721 is
         );
 
         _transferTokens(address(this), msg.sender, tokenId);
+        _deleteAuction(tokenId);
     }
 
     function withdraw(uint256 id) external {
@@ -223,5 +221,27 @@ contract MarketplaceERC721 is
 
     function getLatestBid(uint id) public view returns (uint) {
         return _getLatestBid(id);
+    }
+
+    function checkUpkeep(
+        bytes calldata checkData
+    )
+        external
+        view
+        override
+        returns (bool upkeepNeeded, bytes memory /*performData*/)
+    {
+        Auction memory auction = _getAuction(numOfAuctions);
+        upkeepNeeded = block.timestamp > auction.auctionEndBlock;
+    }
+
+    function performUpkeep(bytes calldata /*performData*/) external override {
+        Auction memory auction = _getAuction(numOfAuctions);
+        address highestBidder = _getLatestProposer(numOfAuctions);
+
+        if (block.timestamp > auction.auctionEndBlock) {
+            _transferTokens(address(this), highestBidder, numOfAuctions);
+            emit TokenClaimed(highestBidder, numOfAuctions);
+        }
     }
 }

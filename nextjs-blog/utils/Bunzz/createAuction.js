@@ -306,3 +306,18 @@ export const _owner = async (provider) => {
         return tx
     } catch (e) {}
 }
+
+export const _retrieveTokenNotSold = async (provider, token) => {
+    try {
+        const signer = provider.getSigner()
+        const marketplace = new Contract(
+            BUNZZ_MARKETPLACE_ADDRESS,
+            BUNZZ_MARKETPLACE_ABI,
+            signer
+        )
+        const tx = await marketplace.retrieveTokenNotSold(token)
+        await tx.wait()
+    } catch (e) {
+        console.log(e)
+    }
+}
