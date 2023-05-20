@@ -1618,9 +1618,9 @@ export const TOKEN_ABI = [
     },
 ]
 
-export const BUNZZ_TOKEN_ADDRESS = "0xcafeCB56DD42F73b02A2e338Df8076133e101099"
+export const BUNZZ_TOKEN_ADDRESS = "0x5DBA5a9b04F8DE9f2Cc4e1868C6e43C8bB430dC7"
 export const BUNZZ_MARKETPLACE_ADDRESS =
-    "0x50A4451653F4508bA616D1cdc3aa790B005aE516"
+    "0x06450FBf23520f2D43f15589fA29cFB8Cf504911"
 
 export const BUNZZ_TOKEN_ABI = [
     {
@@ -2176,6 +2176,30 @@ export const BUNZZ_MARKETPLACE_ABI = [
     {
         inputs: [
             {
+                internalType: "bytes",
+                name: "checkData",
+                type: "bytes",
+            },
+        ],
+        name: "checkUpkeep",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "upkeepNeeded",
+                type: "bool",
+            },
+            {
+                internalType: "bytes",
+                name: "",
+                type: "bytes",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
                 internalType: "uint256",
                 name: "tokenId",
                 type: "uint256",
@@ -2428,6 +2452,19 @@ export const BUNZZ_MARKETPLACE_ABI = [
             },
         ],
         stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "bytes",
+                name: "",
+                type: "bytes",
+            },
+        ],
+        name: "performUpkeep",
+        outputs: [],
+        stateMutability: "nonpayable",
         type: "function",
     },
     {
